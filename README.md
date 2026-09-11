@@ -45,7 +45,7 @@ latexmk -xelatex main.tex   # 编译（含参考文献，多轮自动）
 
 | 用途 | 字体 | 说明 |
 | --- | --- | --- |
-| 中文正文 | Songti SC | macOS 自带；Linux 用户请将 `main.tex` 中 `\setCJKmainfont{Songti SC}` 替换为 `Noto Serif CJK SC` 等 |
+| 中文正文 | Songti SC | macOS 自带；其他环境自动回退 FandolSong（TeX Live 自带），无需修改 |
 | 拉丁正文 | XCharter | TeX Live 自带，无需安装 |
 | 等宽 | Maple Mono | 可选；开源（OFL），未安装自动回退 |
 
@@ -89,7 +89,7 @@ Edit `\title` / `\author` / `\institute` / `\date` in `main.tex`, write your sli
 
 | Slot | Font | Notes |
 | --- | --- | --- |
-| CJK text | Songti SC | bundled with macOS; on Linux replace `\setCJKmainfont{Songti SC}` with e.g. `Noto Serif CJK SC` |
+| CJK text | Songti SC | bundled with macOS; falls back to FandolSong (bundled with TeX Live) automatically elsewhere |
 | Latin text | XCharter | ships with TeX Live |
 | Monospace | Maple Mono | optional; open source (OFL), auto-fallback if missing |
 

@@ -3,11 +3,18 @@
 \usefonttheme{serif}
 \usepackage{lipsum}
 % 中文支持：需用 XeLaTeX 编译（latexmk -xelatex main.tex）
-% 衬线宋体 Songti SC：正文/无衬线/等宽环境下的中文字体
+% 中文衬线宋体：macOS 用 Songti SC；其他环境（Linux/Overleaf 等）自动回退到
+% TeX Live 自带的 FandolSong（按文件名经 kpathsea 加载，不依赖系统字体）
 \usepackage[fontset=none, scheme=plain]{ctex}
-\setCJKmainfont{Songti SC}[AutoFakeSlant=0.2]
-\setCJKsansfont{Songti SC}[AutoFakeSlant=0.2]
-\setCJKmonofont{Songti SC}
+\IfFontExistsTF{Songti SC}{%
+  \setCJKmainfont{Songti SC}[AutoFakeSlant=0.2]%
+  \setCJKsansfont{Songti SC}[AutoFakeSlant=0.2]%
+  \setCJKmonofont{Songti SC}%
+}{%
+  \setCJKmainfont{FandolSong-Regular}[Extension=.otf,BoldFont=FandolSong-Bold,AutoFakeSlant=0.2]%
+  \setCJKsansfont{FandolSong-Regular}[Extension=.otf,BoldFont=FandolSong-Bold,AutoFakeSlant=0.2]%
+  \setCJKmonofont{FandolFang-Regular}[Extension=.otf,BoldFont=FandolFang-Regular]%
+}
 \usepackage{hyperref}
 \setmainfont{XCharter} % Nicer fonts — the charter package is ignored under XeLaTeX, so use fontspec instead
 % 等宽字体：优先 Maple Mono NF（静态字族，真实粗/斜体），其次可变版，未安装则回退默认
