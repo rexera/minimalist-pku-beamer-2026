@@ -1,0 +1,188 @@
+\mode<presentation>
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\ProcessOptionsBeamer
+
+\useoutertheme[subsection=false]{smoothbars}
+\makeatletter
+\newcommand{\frameofframes}{/}
+\newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
+\setbeamertemplate{footline} 
+  {%
+    \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[ht=2.5ex,dp=1ex,%
+      leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+      {\usebeamerfont{author in head/foot}\insertshortauthor}%
+      \hfill%
+      {\usebeamerfont{title in head/foot}\insertshorttitle}%
+      \hfill%
+      {\usebeamerfont{frame number}\usebeamercolor[fg]{frame number}\insertframenumber~\frameofframes~\inserttotalframenumber}
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}
+    \end{beamercolorbox}
+  }
+\makeatother
+
+\useinnertheme{circles}
+%\useinnertheme{rectangles}
+%\useoutertheme{default}
+%\useinnertheme[shadow=true]{rounded}
+
+% ---- 固定高度顶栏（对 smoothbars 的修补）----
+% 仅做三件事：① 去掉原版顶栏/标题条之间的模糊渐变过渡；② 固定条带高度（原版无标题的
+% 分节目录页会比正文页高一截）；③ 配色统一为 peking。导航条内部几何（文字/圆点行位置、
+% 0.3cm 内边距、字号）完全保留原版：条带高度 = 原版 barshade 的 6ex（同样在
+% \AtBeginDocument 的 headline 字体上下文中求值），导航行经像素校准锚定在原版位置
+% （tab 文字基线 y≈6.01pt，pdftotext -bbox 对照原版误差 <0.01pt）。
+% 右上角校徽（Figures/PKU-emblem-names.png，墨迹紧贴画布）以墨迹对齐
+% 标题文字：高度 = 当前标题的墨迹高度（\settoheight + \settodepth），
+% 顶边锚定在标题墨迹顶线，与标题文字严格同高对齐。
+\makeatletter
+\newlength{\pku@headheight}
+\newlength{\pku@titleht}
+\newlength{\pku@titledp}
+\newlength{\pku@logoheight}
+\newlength{\pku@logowidth}
+\newlength{\pku@logoyshift}
+% 顶部导航条统一为主题红 peking（原继承 palette quaternary，为更暗的红，
+% 与底部栏 / 首页标题 box 的纯 peking 不一致）
+\setbeamercolor{section in head/foot}{bg=peking,fg=white}
+\setbeamercolor{section in head/foot shaded}{bg=peking,fg=white!55!peking}
+% 条带高度：内容块（tab 文字 + mini-frame 圆点行，约 10.2pt）上下各留 ~1pt 呼吸空间，
+% 像素校准为 11.6pt（原版 6ex 在不同字体上下文下求值结果偏大，导致底部空 ~8px）
+\AtBeginDocument{\global\pku@headheight=11.6pt}
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}[wd=\paperwidth,colsep=0pt,ht=\pku@headheight,dp=0ex,vmode]{section in head/foot}%
+    \vbox to \pku@headheight{%
+      {\vskip0.52pt}%  % 导航行锚定：像素校准至原版 tab 基线（y=6.01pt，见上方注释）
+      \insertnavigation{\paperwidth}%
+      \vss}%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{frametitle}
+{%
+  \nointerlineskip
+  \usebeamerfont*{frametitle}%
+  \settoheight{\pku@titleht}{\insertframetitle}%
+  \settodepth{\pku@titledp}{\insertframetitle}%
+  \pku@logoheight=\dimexpr\pku@titleht+\pku@titledp\relax
+  \settowidth{\pku@logowidth}{\includegraphics[height=\pku@logoheight]{Figures/PKU-emblem-names.png}}%
+  \begin{beamercolorbox}[wd=\paperwidth,sep=0.3cm,%
+    rightskip=\dimexpr\pku@logowidth+0.4cm\relax]{frametitle}%
+    \strut\insertframetitle
+    \ifx\insertframesubtitle\@empty\else
+      \par{\usebeamerfont*{framesubtitle}\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle}%
+    \fi
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \pku@logoyshift=\pku@headheight
+  \addtolength{\pku@logoyshift}{0.3cm}%
+  \addtolength{\pku@logoyshift}{\ht\strutbox}%
+  \addtolength{\pku@logoyshift}{-\pku@titleht}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=0pt]
+      at ([yshift=-\pku@logoyshift,xshift=-0.3cm]current page.north east)
+      {\includegraphics[height=\pku@logoheight]{Figures/PKU-emblem-names.png}};
+  \end{tikzpicture}%
+}
+\makeatother
+
+\xdefinecolor{peking}{cmyk}{0,1,1,0.45}%{rgb}{0.543,0.0,0.0703} %{cmyk}{0,100,100,45}%{rgb}{0.5,0.0,0.0}  %RGB#820010
+\xdefinecolor{peking_gold}{cmyk}{0,0.35,0.75,0.05}
+\xdefinecolor{peking_blue}{cmyk}{0.6,0.35,0.0,0.4}
+\xdefinecolor{peking_darkblue}{cmyk}{1.0,0.6,0.0,0.5}
+\xdefinecolor{peking_gray}{cmyk}{0.0,0.0,0.08,0.55}
+\xdefinecolor{peking_dirt}{cmyk}{0.0,0.2,0.35,0.3}
+\xdefinecolor{peking_orange}{cmyk}{0.0,0.7,1.0,0.0}
+\xdefinecolor{peking_green}{cmyk}{0.2,0.0,1.0,0.15}
+\xdefinecolor{peking_darkgreen}{cmyk}{0.6,0.5,1.0,0.45}
+\xdefinecolor{pantone_gold}{RGB}{135,103,79}
+\xdefinecolor{pantone_silver}{RGB}{138,141,143}
+\xdefinecolor{WM_Gold}{cmyk}{0.09,0.29,0.66,0.24}
+\setbeamercolor{footline}{bg=peking}
+%\setbeamercolor{frametitle}{bg=white!70!pantone_gold,fg=peking}
+\setbeamercolor{frametitle}{bg=white,fg=peking}
+\setbeamercolor{title}{bg=peking}
+%\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}%,parent=structure}
+\setbeamerfont{footline}{series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{caption}[numbered]
+
+\beamertemplateshadingbackground{white!5}{white}
+
+\setbeamercolor{palette primary}{use=structure,fg=white,bg=structure.fg}
+\setbeamercolor{palette secondary}{use=structure,fg=white,bg=structure.fg!95!black}%{use=structure,fg=white,bg=structure.fg!90!black}
+\setbeamercolor{palette tertiary}{use=structure,fg=white,bg=structure.fg!90!black}
+\setbeamercolor{palette quaternary}{fg=white,bg=structure.fg!85!black}
+%\setbeamercolor*{sidebar}{use=structure,bg=structure.fg}
+\setbeamercolor{titlelike}{parent=palette primary}
+
+%% try
+\setbeamercolor{block title}{bg=peking_blue,fg=white}
+\setbeamercolor{block body}{bg=peking_blue!10}
+
+\BeforeBeginEnvironment{definition}{%
+    \setbeamercolor{block title}{bg=peking_blue,fg=white}
+    \setbeamercolor{block body}{bg=peking_blue!10}
+}
+\AfterEndEnvironment{definition}{
+ \setbeamercolor{block title}{bg=peking_blue,fg=white}
+ \setbeamercolor{block body}{bg=peking_blue!10}
+}
+
+\BeforeBeginEnvironment{theorem}{%
+    \setbeamercolor{block title}{bg=peking_orange,fg=white}
+    \setbeamercolor{block body}{bg=peking_orange!10}
+}
+\AfterEndEnvironment{theorem}{
+ \setbeamercolor{block title}{bg=peking_blue,fg=white}
+ \setbeamercolor{block body}{bg=peking_blue!10}
+}
+
+\BeforeBeginEnvironment{proposition}{%
+    \setbeamercolor{block title}{bg=peking_orange,fg=white}
+    \setbeamercolor{block body}{bg=peking_orange!10}
+}
+\AfterEndEnvironment{proposition}{
+ \setbeamercolor{block title}{bg=peking_blue,fg=white}
+ \setbeamercolor{block body}{bg=peking_blue!10}
+}
+
+\setbeamercolor*{block title example}{use={normal text,example text},bg=white!70!pantone_gold,fg=peking}
+\setbeamercolor{fine separation line}{}
+\setbeamercolor{item projected}{fg=white}
+\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+%\setbeamercolor{palette sidebar quaternary}{fg=white}
+\setbeamercolor{section in sidebar}{fg=brown}
+\setbeamercolor{section in sidebar shaded}{fg=grey}
+\setbeamercolor{separation line}{}
+\setbeamercolor{sidebar}{bg=peking}
+\setbeamercolor{sidebar}{parent=palette primary}
+\setbeamercolor{structure}{fg=peking}
+\setbeamercolor{subsection in sidebar}{fg=brown}
+\setbeamercolor{subsection in sidebar shaded}{fg=grey}
+\AtBeginSection[]{
+	\begin{frame}
+		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=hide,subsubsectionstyle=hide]
+	\end{frame}
+}
+\setbeamercolor{postgreen}{fg=black,bg=example text.fg!75!black!10!bg}
+\setbeamercolor{postred}{fg=black,bg=white!70!pantone_gold}
+\setbeamercolor{postblue}{fg=black,bg=peking_blue!10}
+%\AtBeginSubsection[]{
+%	\begin{frame}
+%		\tableofcontents[sectionstyle=show/shaded,subsectionstyle=hide,subsubsectionstyle=hide]
+%	\end{frame}
+%}
+
+\mode
+<all>

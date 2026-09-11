@@ -1,0 +1,20 @@
+# LaTeX 编译中间文件
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+# macOS
+.DS_Store
+
+# 预览输出 / preview renders
+preview/
+main.pdf
