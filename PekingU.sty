@@ -91,6 +91,16 @@
 }
 \makeatother
 
+% 三线表（booktabs）主题：头尾粗线 1.2pt，中间线 0.5pt，与正文形成明显层次；
+% 表头建议用 \textbf 加粗（默认即黑色，不继承任何主题色）。
+% booktabs 在 main.tex 中晚于本文件加载，故延迟到导言区末尾设置。
+\makeatletter
+\AtEndPreamble{\@ifpackageloaded{booktabs}{%
+  \setlength{\heavyrulewidth}{1.2pt}%
+  \setlength{\lightrulewidth}{0.5pt}%
+}{}}
+\makeatother
+
 \xdefinecolor{peking}{cmyk}{0,1,1,0.45}%{rgb}{0.543,0.0,0.0703} %{cmyk}{0,100,100,45}%{rgb}{0.5,0.0,0.0}  %RGB#820010
 \xdefinecolor{peking_gold}{cmyk}{0,0.35,0.75,0.05}
 \xdefinecolor{peking_blue}{cmyk}{0.6,0.35,0.0,0.4}

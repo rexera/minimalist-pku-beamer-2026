@@ -39,7 +39,7 @@ latexmk -xelatex main.tex   # 编译（含参考文献，多轮自动）
 ./clean.sh --deep           # 连 main.pdf 一起清理
 ```
 
-日常使用：修改 `main.tex` 中的 `\title` / `\author` / `\institute` / `\date`，正文直接写中文，`Figures/` 里放你的图片即可。VS Code（LaTeX Workshop）或 Overleaf 中把编译器设为 **XeLaTeX**。
+日常使用：修改 `main.tex` 中的 `\title` / `\author` / `\institute` / `\date`，正文直接写中文，`Figures/` 里放你的图片即可。画幅切换：把 `main.tex` 文档类选项中的 `aspectratio=43` 改为 `aspectratio=169` 即可切到 16:9。VS Code（LaTeX Workshop）或 Overleaf 中把编译器设为 **XeLaTeX**。
 
 ## 字体说明
 
@@ -58,7 +58,8 @@ latexmk -xelatex main.tex   # 编译（含参考文献，多轮自动）
 5. 重写 frametitle：平面标题条 + 右上角校徽墨迹级对齐（`\settoheight`/`\settodepth` 锚定，随标题自适应）。
 6. 首页换用校徽组合图，移除失效的 `\logo` 机制，修复 logo 路径。
 7. 引用整体（含括号）着色为 `peking_blue`，`citecolor` 同步；粗体强调改用主题红 `peking`。
-8. 新增 `clean.sh`、`.gitignore`、`LICENSE`，重写双语 README。
+8. 表格主题：三线表头尾粗线 1.2pt、中间线 0.5pt，表头加粗黑色；画幅可切换 4:3 / 16:9（`aspectratio`）。
+9. 新增 `clean.sh`、`.gitignore`、`LICENSE`，重写双语 README。
 
 ---
 
@@ -83,7 +84,7 @@ latexmk -xelatex main.tex   # build (bibliography, auto-reruns)
 ./clean.sh --deep           # also remove main.pdf
 ```
 
-Edit `\title` / `\author` / `\institute` / `\date` in `main.tex`, write your slides in Chinese or English, put figures in `Figures/`. Set the compiler to **XeLaTeX** in VS Code (LaTeX Workshop) or Overleaf.
+Edit `\title` / `\author` / `\institute` / `\date` in `main.tex`, write your slides in Chinese or English, put figures in `Figures/`. To switch to 16:9, change the document-class option `aspectratio=43` to `aspectratio=169`. Set the compiler to **XeLaTeX** in VS Code (LaTeX Workshop) or Overleaf.
 
 ## Fonts
 
@@ -102,7 +103,8 @@ Edit `\title` / `\author` / `\institute` / `\date` in `main.tex`, write your sli
 5. Rewritten frametitle: flat title bar + corner emblem with ink-level alignment (`\settoheight`/`\settodepth` anchoring).
 6. Title-page emblem lockup; removed the broken `\logo` mechanism and fixed the logo path.
 7. Whole-citation coloring (`peking_blue`, parentheses included) with synced `citecolor`; theme-red bold emphasis.
-8. Added `clean.sh`, `.gitignore`, `LICENSE`; bilingual README.
+8. Table theme: three-line booktabs rules (1.2pt outer / 0.5pt middle) with bold black headers; switchable 4:3 / 16:9 (`aspectratio`).
+9. Added `clean.sh`, `.gitignore`, `LICENSE`; bilingual README.
 
 ## 致谢 / Credits
 

@@ -1,4 +1,5 @@
-\documentclass[10pt,hyperref={colorlinks,citecolor=peking_blue,urlcolor=peking_blue,linkcolor=}]{beamer}
+% 画幅切换：aspectratio=43（4:3，默认）↔ aspectratio=169（16:9）
+\documentclass[10pt,aspectratio=43,hyperref={colorlinks,citecolor=peking_blue,urlcolor=peking_blue,linkcolor=}]{beamer}
 \usepackage{PekingU}
 \usefonttheme{serif}
 \usepackage{lipsum}
@@ -199,11 +200,11 @@ important contents are \textcolor{peking}{\bf bold red} \citep{MachineLearningI}
         \label{table}
         \setlength{\tabcolsep}{3pt}
         \begin{tabular}{p{40pt}p{100pt}p{140pt}}
-        \hline
-        Symbol& 
-        Quantity& 
-        Conversion from Gaussian and \par CGS EMU to SI $^{\mathrm{a}}$ \\
-        \hline
+        \toprule
+        {\bfseries Symbol}&
+        {\bfseries Quantity}&
+        {\bfseries Conversion from Gaussian and \par CGS EMU to SI $^{\mathrm{a}}$} \\
+        \midrule
         $\Phi $& 
         magnetic flux& 
         1 Mx $\to  10^{-8}$ Wb $= 10^{-8}$ V$\cdot $s \\
@@ -225,7 +226,7 @@ important contents are \textcolor{peking}{\bf bold red} \citep{MachineLearningI}
         $\sigma $& 
         specific magnetization& 
         1 erg/(G$\cdot $g) $=$ 1 emu/g $\to $ 1 A$\cdot $m$^{2}$/kg \\
-        \hline
+        \bottomrule
         \multicolumn{3}{p{280pt}}{Vertical lines are optional in tables. Statements that serve as captions for 
         the entire table do not need footnote letters. }
         \end{tabular}
